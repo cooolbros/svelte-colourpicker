@@ -1,6 +1,18 @@
 {
     "name": "svelte-colourpicker",
     "version": "0.0.2",
+    "description": "Svelte colour picker component",
+    "keywords": [
+        "color",
+        "colour",
+        "picker",
+        "svelte"
+    ],
+    "homepage": "https://github.com/cooolbros/svelte-colourpicker#readme",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/cooolbros/svelte-colourpicker.git"
+    },
     "scripts": {
         "dev": "vite dev",
         "build": "svelte-kit sync && svelte-package",
