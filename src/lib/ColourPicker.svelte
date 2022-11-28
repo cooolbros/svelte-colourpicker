@@ -212,7 +212,7 @@
 
     export let value: string = "rgba(255, 0, 0, 1)"
 
-    const dispatch = createEventDispatcher<{ change: { rgb: RGB; hsv: HSV } & A }>()
+    const dispatch = createEventDispatcher<{ change: { rgb: RGB; hsv: HSV; hex: `#${string}` } & A }>()
 
     let c = colour(value)
 
@@ -222,7 +222,7 @@
     function onValueChanged() {
         if (value != c.rgba) {
             c = colour(value)
-            dispatch("change", { rgb: { r: c.r, b: c.b, g: c.g }, hsv: { h: c.h, s: c.s, v: c.v }, a: c.a })
+            dispatch("change", { rgb: { r: c.r, b: c.b, g: c.g }, hsv: { h: c.h, s: c.s, v: c.v }, hex: c.hex, a: c.a })
         }
     }
 
