@@ -216,13 +216,18 @@
 
     let c = colour(value)
 
-    $: value = c.rgba
+    $: c && onColourChanged()
+
+    function onColourChanged() {
+        value = c.rgba
+        dispatch("change", { rgb: { r: c.r, b: c.b, g: c.g }, hsv: { h: c.h, s: c.s, v: c.v }, hex: c.hex, a: c.a })
+    }
+
     $: value && onValueChanged()
 
     function onValueChanged() {
         if (value != c.rgba) {
             c = colour(value)
-            dispatch("change", { rgb: { r: c.r, b: c.b, g: c.g }, hsv: { h: c.h, s: c.s, v: c.v }, hex: c.hex, a: c.a })
         }
     }
 
