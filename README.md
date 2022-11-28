@@ -14,6 +14,8 @@ Usage:
 
 ```html
 <script>
+    import { ColourPicker } from "svelte-colourpicker"
+
     let value = "rgba(255, 0, 0, 1)"
 </script>
 
