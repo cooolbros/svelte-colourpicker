@@ -1,6 +1,6 @@
 {
     "name": "svelte-colourpicker",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Svelte colour picker component",
     "keywords": [
         "color",
