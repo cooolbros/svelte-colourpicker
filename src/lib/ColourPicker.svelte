@@ -131,13 +131,13 @@
         } else {
             switch (max) {
                 case r1:
-                    h = 60 * (((g1 - b1) / difference) % 6)
+                    h = (60 * ((g1 - b1) / difference) + 360) % 360
                     break
                 case g1:
-                    h = 60 * ((b1 - r1) / difference + 2)
+                    h = (60 * ((b1 - r1) / difference) + 120) % 360
                     break
                 case b1:
-                    h = 60 * ((r1 - g1) / difference + 4)
+                    h = (60 * ((r1 - g1) / difference) + 240) % 360
                     break
                 default:
                     throw new Error("h did not match r1 | g1 | b1")
