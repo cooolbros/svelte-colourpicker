@@ -9,6 +9,7 @@
         "svelte"
     ],
     "homepage": "https://github.com/cooolbros/svelte-colourpicker#readme",
+    "license": "MIT",
     "repository": {
         "type": "git",
         "url": "https://github.com/cooolbros/svelte-colourpicker.git"
