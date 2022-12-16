@@ -467,6 +467,7 @@
         border-radius: 50%;
         box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
         cursor: pointer;
+        transition: 0ms;
     }
 
     .colour-picker-container {
