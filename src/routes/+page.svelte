@@ -1,24 +1,20 @@
 <script lang="ts">
     import { browser } from "$app/environment"
     import { ColourPicker } from "$lib"
-    import { onDestroy, onMount } from "svelte"
+    import { onMount } from "svelte"
     import "../app.css"
     import ThemeToggle from "./ThemeToggle.svelte"
 
     let theme: "light" | "dark" = "light"
 
-    let media: MediaQueryList
-
     let value = "rgba(255, 0, 0, 1)"
 
     onMount(() => {
-        media = matchMedia("(prefers-color-scheme: dark)")
+        const media = matchMedia("(prefers-color-scheme: dark)")
         theme = media.matches ? "dark" : "light"
         media.addEventListener("change", change)
-    })
 
-    onDestroy(() => {
-        media?.removeEventListener("change", change)
+        return () => media.removeEventListener("change", change)
     })
 
     function change(e: MediaQueryListEvent) {
