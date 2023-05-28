@@ -558,6 +558,7 @@
 
     input[type="number"] {
         width: 2.75rem;
+        appearance: textfield;
         -moz-appearance: textfield; /* Firefox */
     }
 
