@@ -34,7 +34,7 @@
             if ((result = rgbRegExp.exec(input))) {
                 r = parseFloat(result[1])
                 g = parseFloat(result[2])
-                b = parseFloat(result[2])
+                b = parseFloat(result[3])
                 a = 1
             } else if ((result = rgbaRegExp.exec(input))) {
                 r = parseFloat(result[1])
