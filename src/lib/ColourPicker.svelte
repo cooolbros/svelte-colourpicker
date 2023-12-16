@@ -253,7 +253,7 @@
     let hueSlider: HTMLCanvasElement
     let opacitySlider: HTMLCanvasElement
 
-    //#region Draw Canvas
+    // #region Draw Canvas
 
     function drawColourCanvas() {
         const context = colourCanvas.getContext("2d")!
@@ -295,9 +295,9 @@
         context.fillRect(0, 0, opacitySlider.width, opacitySlider.height)
     }
 
-    //#endregion
+    // #endregion
 
-    //#region Events
+    // #region Events
 
     const initListener = (fn: (e: MouseEvent) => void): ((e: MouseEvent) => void) => {
         const fn_preventDefault = (e: MouseEvent) => {
@@ -378,7 +378,7 @@
         }
     }
 
-    //#endregion
+    // #endregion
 </script>
 
 <svelte:window on:mouseup={open && !dragging ? tryClosePicker : null} />
