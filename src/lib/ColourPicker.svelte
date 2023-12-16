@@ -385,9 +385,11 @@
 
 <div class="container">
     <div class="colour-input-container transparent">
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div class="colour-input" style:--value={value} on:click|stopPropagation={openPicker} on:keypress|stopPropagation={openPicker} />
     </div>
     {#if open}
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div
             class="colour-picker-container"
             in:fly={{ y: 10, duration: 150 }}
