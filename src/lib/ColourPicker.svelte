@@ -386,7 +386,7 @@
 <div class="container">
     <div class="colour-input-container transparent">
         <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div class="colour-input" style:--value={value} on:click|stopPropagation={openPicker} on:keypress|stopPropagation={openPicker} />
+        <div class="colour-input" style:--value={value} on:click|stopPropagation={openPicker} on:keypress|stopPropagation={openPicker}></div>
     </div>
     {#if open}
         <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -402,21 +402,21 @@
                 <div class="colour-picker">
                     <div class="main">
                         <div class="canvas-container">
-                            <canvas bind:this={colourCanvas} width={size} height={size} on:mousedown={initListener(colourCanvasMove)} />
+                            <canvas bind:this={colourCanvas} width={size} height={size} on:mousedown={initListener(colourCanvasMove)}></canvas>
                             <div
                                 class="pointer pointer-both"
                                 style:--pointer-bg={colour({ h: c.h, s: c.s, v: c.v, a: 1 }).rgba}
                                 style:--x={`${c.s * size}px`}
                                 style:--y={`${size - c.v * size}px`}
-                            />
+                           ></div>
                         </div>
                         <div class="canvas-container">
-                            <canvas bind:this={hueSlider} width={18} height={size} on:mousedown={initListener(hueSliderMove)} />
-                            <div class="pointer pointer-vertical" style:--pointer-bg={colour({ h: c.h, s: 1, v: 1 }).rgba} style:--y={`${(c.h / 360) * size}px`} />
+                            <canvas bind:this={hueSlider} width={18} height={size} on:mousedown={initListener(hueSliderMove)}></canvas>
+                            <div class="pointer pointer-vertical" style:--pointer-bg={colour({ h: c.h, s: 1, v: 1 }).rgba} style:--y={`${(c.h / 360) * size}px`}></div>
                         </div>
                         <div class="canvas-container transparent">
-                            <canvas bind:this={opacitySlider} width={18} height={size} on:mousedown={initListener(opacitySliderMove)} />
-                            <div class="pointer pointer-vertical" style:--pointer-bg={c.rgba} style:--y={`${c.a * size}px`} />
+                            <canvas bind:this={opacitySlider} width={18} height={size} on:mousedown={initListener(opacitySliderMove)}></canvas>
+                            <div class="pointer pointer-vertical" style:--pointer-bg={c.rgba} style:--y={`${c.a * size}px`}></div>
                         </div>
                     </div>
                     <div class="inputs-container">
