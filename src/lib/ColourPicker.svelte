@@ -408,7 +408,7 @@
                                 style:--pointer-bg={colour({ h: c.h, s: c.s, v: c.v, a: 1 }).rgba}
                                 style:--x={`${c.s * size}px`}
                                 style:--y={`${size - c.v * size}px`}
-                           ></div>
+                            ></div>
                         </div>
                         <div class="canvas-container">
                             <canvas bind:this={hueSlider} width={18} height={size} on:mousedown={initListener(hueSliderMove)}></canvas>
