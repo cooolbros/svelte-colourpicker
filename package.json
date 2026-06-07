@@ -38,13 +38,13 @@
         "svelte": "^4.0.0"
     },
     "devDependencies": {
-        "@sveltejs/adapter-auto": "^3.0.0",
+        "@sveltejs/adapter-auto": "^7.0.1",
         "@sveltejs/kit": "^2.63.0",
         "@sveltejs/package": "^2.5.8",
         "@sveltejs/vite-plugin-svelte": "^7.1.2",
         "prettier": "^3.8.3",
         "prettier-plugin-svelte": "^4.1.0",
-        "publint": "^0.1.12",
+        "publint": "^0.3.21",
         "svelte": "^5.56.2",
         "svelte-check": "^4.6.0",
         "tslib": "^2.5.2",
