@@ -12,7 +12,7 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/cooolbros/svelte-colourpicker.git"
+        "url": "git+https://github.com/cooolbros/svelte-colourpicker.git"
     },
     "scripts": {
         "dev": "vite dev",
