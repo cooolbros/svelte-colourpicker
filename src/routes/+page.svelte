@@ -1,33 +1,17 @@
 <script lang="ts">
-    import { browser } from "$app/environment"
     import { ColourPicker } from "$lib"
-    import { onMount } from "svelte"
+    import { MediaQuery } from "svelte/reactivity"
     import "../app.css"
     import ThemeToggle from "./ThemeToggle.svelte"
 
-    let theme: "light" | "dark" = "light"
+    const media = new MediaQuery("(prefers-color-scheme: dark)")
+    let theme: "light" | "dark" = $derived(media.current ? "dark" : "light")
 
-    let value = "rgba(255, 0, 0, 1)"
+    let value = $state("rgba(255, 0, 0, 1)")
 
-    onMount(() => {
-        const media = matchMedia("(prefers-color-scheme: dark)")
-        theme = media.matches ? "dark" : "light"
-        media.addEventListener("change", change)
-
-        return () => media.removeEventListener("change", change)
+    $effect(() => {
+        document.body.dataset.theme = theme
     })
-
-    function change(e: MediaQueryListEvent) {
-        theme = e.matches ? "dark" : "light"
-    }
-
-    $: theme && setTheme()
-
-    function setTheme() {
-        if (browser) {
-            document.body.dataset.theme = theme
-        }
-    }
 </script>
 
 <svelte:head>

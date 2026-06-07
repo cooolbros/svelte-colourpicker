@@ -1,12 +1,16 @@
 <script lang="ts">
-    export let theme: "light" | "dark"
+    interface Props {
+        theme: "light" | "dark"
+    }
+
+    let { theme = $bindable() }: Props = $props()
 </script>
 
 <button
     class="container"
     style:--background={theme == "light" ? "rgb(255, 220, 60)" : "rgb(25, 80, 150)"}
-    on:click={() => (theme = theme == "light" ? "dark" : "light")}
-    on:mouseup|stopPropagation
+    onclick={() => (theme = theme == "light" ? "dark" : "light")}
+    onmouseup={(event) => event.stopPropagation()}
 >
     <div class="switch" style:--translate={theme == "light" ? "0px" : "32px"}>
         {#if theme == "light"}

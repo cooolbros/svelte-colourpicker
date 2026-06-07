@@ -1,6 +1,4 @@
-<svelte:options immutable />
-
-<script context="module" lang="ts">
+<script module lang="ts">
     const hueColours = ["#ff0000", "#ffff00", "#00ff00", "#00ffff", "#0000ff", "#ff00ff", "#ff0000"]
 
     const size = 230
@@ -207,34 +205,34 @@
 </script>
 
 <script lang="ts">
-    import { createEventDispatcher, tick } from "svelte"
+    import { tick } from "svelte"
     import { fade, fly } from "svelte/transition"
 
-    export let value: string = "rgba(255, 0, 0, 1)"
-
-    const dispatch = createEventDispatcher<{ change: { rgb: RGB; hsv: HSV; hex: `#${string}` } & A }>()
-
-    let c = colour(value)
-
-    $: c && onColourChanged()
-
-    function onColourChanged() {
-        value = c.rgba
-        dispatch("change", { rgb: { r: c.r, b: c.b, g: c.g }, hsv: { h: c.h, s: c.s, v: c.v }, hex: c.hex, a: c.a })
+    interface Props {
+        value?: string
+        onchange?: (event: CustomEvent<{ rgb: RGB; hsv: HSV; hex: `#${string}` } & A>) => any
     }
 
-    $: value && onValueChanged()
+    let { value = $bindable("rgba(255, 0, 0, 1)"), onchange }: Props = $props()
 
-    function onValueChanged() {
+    let c = $state.raw(colour(value))
+
+    $effect(() => {
+        value = c.rgba
+        onchange?.(new CustomEvent("change", { detail: { rgb: { r: c.r, b: c.b, g: c.g }, hsv: { h: c.h, s: c.s, v: c.v }, hex: c.hex, a: c.a } }))
+    })
+
+    $effect(() => {
         if (value != c.rgba) {
             c = colour(value)
         }
-    }
+    })
 
-    let open = false
-    let dragging = false
+    let open = $state(false)
+    let dragging = $state(false)
 
-    async function openPicker() {
+    async function openPicker(event: Event) {
+        event.stopPropagation()
         open = true
         await tick()
         drawColourCanvas()
@@ -249,9 +247,9 @@
         }
     }
 
-    let colourCanvas: HTMLCanvasElement
-    let hueSlider: HTMLCanvasElement
-    let opacitySlider: HTMLCanvasElement
+    let colourCanvas: HTMLCanvasElement = $state()!
+    let hueSlider: HTMLCanvasElement = $state()!
+    let opacitySlider: HTMLCanvasElement = $state()!
 
     // #region Draw Canvas
 
@@ -381,28 +379,28 @@
     // #endregion
 </script>
 
-<svelte:window on:mouseup={open && !dragging ? tryClosePicker : null} />
+<svelte:window onmouseup={open && !dragging ? tryClosePicker : null} />
 
 <div class="container">
     <div class="colour-input-container transparent">
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div class="colour-input" style:--value={value} on:click|stopPropagation={openPicker} on:keypress|stopPropagation={openPicker}></div>
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
+        <div class="colour-input" style:--value={value} onclick={openPicker} onkeypress={openPicker}></div>
     </div>
     {#if open}
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
         <div
             class="colour-picker-container"
             in:fly={{ y: 10, duration: 150 }}
             out:fade={{ duration: 50 }}
-            on:click|stopPropagation
-            on:keypress|stopPropagation
-            on:mouseup={(e) => !dragging && e.stopPropagation()}
+            onclick={(event) => event.stopPropagation()}
+            onkeypress={(event) => event.stopPropagation()}
+            onmouseup={(e) => !dragging && e.stopPropagation()}
         >
             <div class="colour-picker-arrow">
                 <div class="colour-picker">
                     <div class="main">
                         <div class="canvas-container">
-                            <canvas bind:this={colourCanvas} width={size} height={size} on:mousedown={initListener(colourCanvasMove)}></canvas>
+                            <canvas bind:this={colourCanvas} width={size} height={size} onmousedown={initListener(colourCanvasMove)}></canvas>
                             <div
                                 class="pointer pointer-both"
                                 style:--pointer-bg={colour({ h: c.h, s: c.s, v: c.v, a: 1 }).rgba}
@@ -411,20 +409,20 @@
                             ></div>
                         </div>
                         <div class="canvas-container">
-                            <canvas bind:this={hueSlider} width={18} height={size} on:mousedown={initListener(hueSliderMove)}></canvas>
+                            <canvas bind:this={hueSlider} width={18} height={size} onmousedown={initListener(hueSliderMove)}></canvas>
                             <div class="pointer pointer-vertical" style:--pointer-bg={colour({ h: c.h, s: 1, v: 1 }).rgba} style:--y={`${(c.h / 360) * size}px`}></div>
                         </div>
                         <div class="canvas-container transparent">
-                            <canvas bind:this={opacitySlider} width={18} height={size} on:mousedown={initListener(opacitySliderMove)}></canvas>
+                            <canvas bind:this={opacitySlider} width={18} height={size} onmousedown={initListener(opacitySliderMove)}></canvas>
                             <div class="pointer pointer-vertical" style:--pointer-bg={c.rgba} style:--y={`${c.a * size}px`}></div>
                         </div>
                     </div>
                     <div class="inputs-container">
-                        <input type="text" maxlength={7} id="hex" value={c.hex} on:input={hexInputChange} />
-                        <input type="number" autocomplete="off" min={0} max={255} id="r" value={c.r} on:input={redInputChange} />
-                        <input type="number" autocomplete="off" min={0} max={255} id="g" value={c.g} on:input={greenInputChange} />
-                        <input type="number" autocomplete="off" min={0} max={255} id="b" value={c.b} on:input={blueInputChange} />
-                        <input type="number" autocomplete="off" min={0} max={255} id="a" value={c.a} on:input={alphaInputChange} />
+                        <input type="text" maxlength={7} id="hex" value={c.hex} oninput={hexInputChange} />
+                        <input type="number" autocomplete="off" min={0} max={255} id="r" value={c.r} oninput={redInputChange} />
+                        <input type="number" autocomplete="off" min={0} max={255} id="g" value={c.g} oninput={greenInputChange} />
+                        <input type="number" autocomplete="off" min={0} max={255} id="b" value={c.b} oninput={blueInputChange} />
+                        <input type="number" autocomplete="off" min={0} max={255} id="a" value={c.a} oninput={alphaInputChange} />
                         <label for="hex">HEX</label>
                         <label for="r">R</label>
                         <label for="g">G</label>
